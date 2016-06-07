@@ -11,5 +11,5 @@ except:
 value = 0
 
 while True:
-    value = neuro.attention
+    value = neuro.rawValue
     print value

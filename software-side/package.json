@@ -1,0 +1,28 @@
+{
+  "name": "bci-home-automation-software",
+  "version": "1.0.0",
+  "description": "Software part of BCI - Home Automation Project. It takes care of a web server and the serial signal receiver for NeuroSky Headset.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "node-thinkgear": "0.0.1",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cassiohub/bci-home-automation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cassiohub/bci-home-automation/issues"
+  },
+  "homepage": "https://github.com/cassiohub/bci-home-automation#readme"
+}
