@@ -1,5 +1,5 @@
 var nodeThinkGear = require('node-thinkgear');
-var request = require('request');
+var io = require('./socket-test');
 
 var client = nodeThinkGear.createClient({
 	appName:'NodeNeuroSky',
@@ -7,17 +7,11 @@ var client = nodeThinkGear.createClient({
 });
 
 client.on("data", function(data) {
-	console.log(data);
-
+	//console.log(data);
 	if(data.blinkStrength) {
 		console.log("Blink Strength: ", data.blinkStrength);
-
-		request('http://localhost:3000/changeCor?blinkStrength='+data.blinkStrength, function (error, response, body) {
-		  if (!error && response.statusCode == 200) {
-		    console.log(body)
-		  }
-		})
+		io.emit('blink', { blinkStrength: data.blinkStrength });
 	}
 });
 
-client.connect()
+client.connect();

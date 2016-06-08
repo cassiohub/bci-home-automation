@@ -1,0 +1,62 @@
+!<!DOCTYPE html>
+<html>
+<head>
+	<title>Socket Test</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script>
+	  var socket = io();
+
+	  var cores = ["purple", "blue", "yellow", "green", "red"];
+	  var counter = 0;
+	  socket.on('blink', function (data) {
+	    console.log(data);
+	    $("#bloco").css('background', cores[counter % cores.length]);
+		counter++;
+		$("#blinkStrength").text(data.blinkStrength);
+		if(data.blinkStrength > 80) {
+			$("#bloco").addClass("gigante");
+		}
+		else {
+			$("#bloco").removeClass("gigante");
+		}
+	    
+	    socket.emit("clicou", {url: '/sala/led/ON'});
+	    console.log("clicou");
+
+	  });
+
+	</script>
+	<style>
+		div {
+			width: 400px;
+			height: 400px;
+			background: red;
+			margin: 100px;
+			text-align: center;
+			transition: all 1s;
+		}
+		p {
+			font-size:200px;
+			font-family: 'Comic Sans', sans-serif;
+			line-height: 400px;
+			color:white;
+		}
+
+		div.gigante {
+			width:800px;
+			height: 800px;
+			transition: all 1s;
+		}
+	</style>
+</head>
+<body>
+	<h1>Cores</h1>
+
+	<button>Clicar</button>
+
+	<div id="bloco"><p id="blinkStrength">0</p></div>
+
+
+</body>
+</html>
