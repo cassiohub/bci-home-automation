@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
 	socket.on("clicou", function(data) {
-		console.log("Clicou", data);
+		//console.log("Clicou", data);
 	});
 });
 

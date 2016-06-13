@@ -21,9 +21,14 @@
 			$("#bloco").removeClass("gigante");
 		}
 	    
-	    socket.emit("clicou", {url: '/sala/led/ON'});
-	    console.log("clicou");
+	    // socket.emit("clicou", {url: '/sala/led/ON'});
+	    // console.log("clicou");
 
+	  });
+
+
+	  socket.on('doubleBlink', function (data) {
+	  	$("#bloco").toggleClass('borda');
 	  });
 
 	</script>
@@ -47,6 +52,9 @@
 			width:800px;
 			height: 800px;
 			transition: all 1s;
+		}
+		div.borda {
+			border-radius: 50px;
 		}
 	</style>
 </head>
