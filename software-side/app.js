@@ -24,4 +24,4 @@ client.on("data", function(data) {
 	}
 });
 
-client.connect();
+//client.connect();

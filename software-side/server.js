@@ -10,8 +10,10 @@ server.listen(8080, function() {
 	console.log("Server listen on http://localhost:8080/");
 });
 
+app.use(express.static('public'));
+
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/public/socket.html');
+  res.sendFile(__dirname + '/public/html/index.html');
 });
 
 

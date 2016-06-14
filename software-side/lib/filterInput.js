@@ -1,4 +1,4 @@
-var io = require('./server');
+var io = require('../server');
 
 
 function _filterSignal (dataSignal) {
