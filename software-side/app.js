@@ -1,5 +1,6 @@
 var nodeThinkGear = require('node-thinkgear');
-var io = require('./socket-test');
+var io = require('./server');
+var filterInput = require('./lib/filterInput');
 
 var client = nodeThinkGear.createClient({
 	appName:'NodeNeuroSky',
@@ -9,33 +10,18 @@ var client = nodeThinkGear.createClient({
 
 var lastBlink = false;
 client.on("data", function(data) {
-	console.log(data);
-	if(data.blinkStrength) {
-		//console.log("Blink Strength: ", data.blinkStrength);
-		filterBlink(data.blinkStrength);
-	}
-});
+	//console.log(data.blinkStrength);
 
-function filterBlink(blinkData) {
+	filterInput.filterSignal(data);
 
-	if(lastBlink == false) {
-		lastBlink = new Date().getTime();	
+	if(filterInput.filterAttention(data)) {
+		if(data.blinkStrength) {
+			filterInput.filterBlink(lastBlink, data.blinkStrength);
+		}
 	}
 	else {
-		var currBlink = new Date().getTime();
-		var diff = currBlink - lastBlink;
-		
-		if(diff >= 0 && diff <= 300) {
-			console.log("Diff", diff);
-			console.log("DoubleBlink");
-			io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
-		}
-		else {
-			io.emit('blink', { blinkStrength: blinkData, doubleBlink: false });
-			console.log("Blink");
-		}
-		lastBlink = currBlink;
+		io.emit("message", {message: "Not enough attention!"})
 	}
-}
+});
 
 client.connect();

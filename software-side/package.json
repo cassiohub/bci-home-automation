@@ -8,7 +8,8 @@
     "express": "^4.13.4",
     "jade": "^1.11.0",
     "node-thinkgear": "0.0.1",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "socket.io": ""
   },
   "devDependencies": {},
   "scripts": {
