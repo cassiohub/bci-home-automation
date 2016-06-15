@@ -2,12 +2,16 @@
   margin: 60px auto;
   float: none;
 }
+.menu-container-box {
+  overflow: hidden
+}
 
+
+/* Footer Navigator */
 .navigator {
   display: block;
   height: 35px;
 }
-
 .navigator > a:first-child {
   float: left;
 }
