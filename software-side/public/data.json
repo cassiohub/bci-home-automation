@@ -1,0 +1,14 @@
+[
+	{
+		"roomName": "Living Room",
+		"badgeClass": "glyphicon-chevron-right",
+		"roomDevices": [
+			{
+				"deviceId": 001,
+				"deviceName": "Light Bulb 1",
+				"deviceIcon": "ON",
+				"deviceIconAlt": "OFF"
+			}
+		]
+	}
+]

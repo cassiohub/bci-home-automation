@@ -41,18 +41,19 @@ function _filterBlink (lastBlink, blinkData) {
 		
 		if(blinkData > 100) {
 			io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
-			return true;
+			return lastBlink;
 		}
 
 		if(diff >= 0 && diff <= 300) {
 			io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
-			return true;
+			return lastBlink;
 		}
 		else {
 			io.emit('blink', { blinkStrength: blinkData, doubleBlink: false });
 		}
 
 		lastBlink = currBlink;
+		return lastBlink;
 	}
 }
 
