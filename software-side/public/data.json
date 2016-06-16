@@ -7,20 +7,23 @@
 			{
 				"deviceId": "001",
 				"deviceName": "Light Bulb 1",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "002",
 				"deviceName": "Light Bulb 2",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "003",
 				"deviceName": "AC",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			}
 		]
 	},
@@ -32,20 +35,23 @@
 			{
 				"deviceId": "001",
 				"deviceName": "Light Bulb 1",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "002",
 				"deviceName": "Curtains",
-				"deviceIcon": "OPEN",
-				"deviceIconAlt": "CLOSE"
+				"deviceCurrState": "OPEN",
+				"deviceState": "OPEN",
+				"deviceAltState": "CLOSE"
 			},
 			{
 				"deviceId": "003",
 				"deviceName": "AC",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			}
 
 		]
@@ -58,20 +64,23 @@
 			{
 				"deviceId": "001",
 				"deviceName": "Light Bulb 1",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "002",
 				"deviceName": "Light Bulb 2",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "003",
 				"deviceName": "AC",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			}
 		]
 	},
@@ -83,20 +92,23 @@
 			{
 				"deviceId": "001",
 				"deviceName": "Light Bulb 1",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "002",
 				"deviceName": "Light Bulb 2",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			},
 			{
 				"deviceId": "003",
 				"deviceName": "AC",
-				"deviceIcon": "ON",
-				"deviceIconAlt": "OFF"
+				"deviceCurrState": "ON",
+				"deviceState": "ON",
+				"deviceAltState": "OFF"
 			}
 		]
 	}

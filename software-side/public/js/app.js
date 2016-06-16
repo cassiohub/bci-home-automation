@@ -19,21 +19,7 @@ socket.on('violentBlink', function (data) {
 });
 
 
-function walkThroughMenu(menu) {
-  $menu = $(".menu-list.active");
-  $active = $menu.find(".active");
-  $last = $menu.find("a").last();
 
-  if(!$last.hasClass("active")) {
-      $next = $active.next();
-  }
-  else {
-      $next = $menu.find("a").first();
-  }
-
-  $active.removeClass("active");
-  $next.addClass("active");
-}
 
 
 function getMenuData(callback) {
@@ -59,14 +45,47 @@ function buildMenu(data) {
 function buildDeviceMenu(data) {
   var $menuDevices = $("#devices");
   $menuDevices.html("");
+  $menuDevices.append("<h3 class='page-header'>Devices on this Room</h3>");
   data.forEach(function(device) {
     $menuDevices.append(
-        "<a href='#' class='list-group-item'>"+ device.deviceName +"<span class='badge'>"+ device.deviceIcon +"</span></a>"
+        "<a href='#' class='list-group-item' data-state='"+ device.deviceState +"' data-altState='"
+        + device.deviceAltState +"' data-deviceId='"+device.deviceId+"' data-deviceCurrState='"+ device.deviceCurrState +"'>"
+        + device.deviceName +"<span class='badge'>"+ device.deviceCurrState +"</span></a>"
       );
 
     $menuDevices.find("a").first().addClass("active");
   });
 }
+
+function walkThroughMenu(menu) {
+  $menu = $(".menu-list.active");
+  $active = $menu.find(".active");
+  $last = $menu.find("a").last();
+  $backButton = $("#backButton");
+
+  if(!$last.hasClass("active")) {
+    $next = $active.next();
+  }
+  else {
+    if($backButton.is(":visible")) {
+      if($backButton.hasClass("btn-primary")) {
+        $backButton.removeClass("btn-primary").addClass("btn-default");
+        $next = $menu.find("a").first();  
+      }
+      else {
+        $(".menu-list.active a.active").removeClass(".active");
+        $backButton.removeClass("btn-default").addClass("btn-primary");  
+      }
+    }
+    else {
+      $next = $menu.find("a").first();  
+    }
+  }
+
+  $active.removeClass("active");
+  $next.addClass("active");
+}
+
 
 function selectRoom() {
   var $menu = $("#rooms");
@@ -78,10 +97,52 @@ function selectRoom() {
 
   menuData.forEach(function(room) {
     if(room.roomSlug == $selected) {
-      buildDeviceMenu(room.roomDevices);    
+      buildDeviceMenu(room.roomDevices);
+      $("#backButton").show();
     }
   });
 }
+
+
+function toggleDeviceState(state) {
+  var $selectedDevice = $("#devices").find("a.active");
+  var $stateLabel = $selectedDevice.find("span.badge");
+  var $deviceCurrState = $stateLabel.text();
+  var $deviceState = $selectedDevice.data("state");
+  var $deviceAltState = $selectedDevice.data("altstate");
+
+  var $room = $("#rooms").find("a.active").data("slug");
+  var $deviceId = $selectedDevice.data("deviceid");
+
+  if($deviceCurrState == $deviceState) {
+    $stateLabel.text($deviceAltState);
+  }
+  else {
+    $stateLabel.text($deviceState);
+  }
+
+  var deviceNewState = {
+    room: $room,
+    device: $deviceId,
+    currState: $stateLabel.text()
+  }
+  console.log(deviceNewState)
+  socket.emit("toggleDeviceState", deviceNewState);
+  
+}
+
+
+function goBack() {
+  $backButton = $("#backButton");
+  $roomsMenu = $("#rooms");
+  $deviceMenu = $("#devices");
+
+
+  $backButton.removeClass("btn-primary").addClass("btn-default").hide();
+  $deviceMenu.removeClass("active").empty();
+  $roomsMenu.addClass("active");
+}
+
 
 
 function init() {

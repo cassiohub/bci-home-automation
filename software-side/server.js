@@ -21,6 +21,10 @@ io.on('connection', function (socket) {
 	socket.on("clicou", function(data) {
 		//console.log("Clicou", data);
 	});
+
+	socket.on("toggleDeviceState", function(data) {
+		console.log("toggleDeviceState", data);
+	});
 });
 
 

@@ -18,3 +18,7 @@
 .navigator > a:last-child {
   float: right;
 }
+
+#backButton {
+  display: none;
+}
