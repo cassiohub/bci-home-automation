@@ -20,12 +20,19 @@ socket.on('violentBlink', function (data) {
 
 
 
-
+function persistLocalStorage(data) {
+  if(localStorage.menuData) {
+    localStorage.removeItem("menuData");
+  }
+  localStorage.setItem("menuData", JSON.stringify(data));
+}
 
 function getMenuData(callback) {
-  $.get("data.json", function(data) {
-    localStorage.setItem("menuData", JSON.stringify(data));
-    callback(data);
+  $.get("data/rooms.json", function(data) {
+    persistLocalStorage(data);
+    if(callback){
+      callback(data);  
+    }
   });
 }
 
@@ -123,12 +130,16 @@ function toggleDeviceState(state) {
 
   var deviceNewState = {
     room: $room,
-    device: $deviceId,
+    deviceId: $deviceId,
     currState: $stateLabel.text()
   }
-  console.log(deviceNewState)
+
   socket.emit("toggleDeviceState", deviceNewState);
   
+  // Update localStorage info
+  setTimeout(function () {
+    getMenuData();
+  }, 200);
 }
 
 
