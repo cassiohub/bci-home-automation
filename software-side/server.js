@@ -36,10 +36,18 @@ io.on('connection', function (socket) {
 	socket.on("toggleDeviceState", function(data) {
 		var roomSlug = data.room;
 		var deviceId = data.deviceId;
-		var url = "http://localhost:8080/api/toggleDeviceState?slug="+roomSlug+"&deviceId="+deviceId;
-		
-		request(url, function() {
-			console.log("toggleDeviceState", data);	
+		var currState = data.currState;
+
+		var apiURL = "http://localhost:8080/api/toggleDeviceState?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;		
+		request(apiURL, function() {
+			console.log("toggleDeviceState", data);
+		});
+
+
+		var arduinoURL = "http://192.168.0.99/?"+currState;
+		console.log(arduinoURL)
+		request(arduinoURL, function(data) {
+			console.log("requested to arduino", data);
 		});
 
 	});
