@@ -14,6 +14,11 @@ server.listen(8080, function() {
 });
 
 app.use(express.static('public'));
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
+
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/html/index.html');
 });
@@ -33,12 +38,31 @@ io.on('connection', function (socket) {
 		var deviceId = data.deviceId;
 		var url = "http://localhost:8080/api/toggleDeviceState?slug="+roomSlug+"&deviceId="+deviceId;
 		
-		request(url);
+		request(url, function() {
+			console.log("toggleDeviceState", data);	
+		});
 
-		console.log("toggleDeviceState", data);
 	});
 });
 
 
+
+function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+}
+
+function clientErrorHandler(err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' });
+  } else {
+    next(err);
+  }
+}
+
+function errorHandler(err, req, res, next) {
+  res.status(500);
+  res.render('error', { error: err });
+}
 
 module.exports = io;

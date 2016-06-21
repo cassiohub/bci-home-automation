@@ -3,9 +3,8 @@ var fs = require("fs");
 
 function _readJSONFile(fileName, callback) {
 	fs.readFile(fileName, "utf8", function(err, data) {
-		console.log(err);
-		var fileJSON = JSON.parse(data.toString());
-		callback(fileJSON);
+		if(err) throw err;
+		callback(JSON.parse(data.toString()));
 	});
 }
 

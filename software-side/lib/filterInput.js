@@ -39,14 +39,18 @@ function _filterBlink (lastBlink, blinkData) {
 		var currBlink = new Date().getTime();
 		var diff = currBlink - lastBlink;
 		
-		if(blinkData > 100) {
-			io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
-			return lastBlink;
+		if(blinkData > 90) {
+			if(diff > 500) {
+				io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
+				return lastBlink;
+			}
 		}
 
-		if(diff >= 0 && diff <= 300) {
-			io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
-			return lastBlink;
+		if(diff >= 0 && diff <= 400) {
+			if(blinkData < 90) {
+				io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
+				return lastBlink;
+			}
 		}
 		else {
 			io.emit('blink', { blinkStrength: blinkData, doubleBlink: false });
