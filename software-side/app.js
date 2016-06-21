@@ -10,11 +10,9 @@ var client = nodeThinkGear.createClient({
 
 var lastBlink = false;
 client.on("data", function(data) {
-	console.log(data.blinkStrength);
+	//console.log(data);
 	
-
 	if(filterInput.filterSignal(data)) {
-		console.log("Tem sinal");
 		//if(filterInput.filterAttention(data)) {
 			if(data.blinkStrength) {
 				var lastBlinkReturn = filterInput.filterBlink(lastBlink, data.blinkStrength);
@@ -25,8 +23,6 @@ client.on("data", function(data) {
 		// 	io.emit("message", {message: "Not enough attention!"})
 		// }
 	}
-
-	
 });
 
 //client.connect();

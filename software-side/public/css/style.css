@@ -6,6 +6,10 @@
   overflow: hidden
 }
 
+#devices {
+	display: none;
+}
+
 
 /* Footer Navigator */
 .navigator {

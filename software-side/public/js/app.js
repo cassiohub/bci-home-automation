@@ -3,7 +3,7 @@ var socket = io();
 socket.on('blink', function (data) {
 
   console.log(data);
-  walkThroughMenu();
+  
   // socket.emit("clicou", {url: '/sala/led/ON'});
 
 });
@@ -11,11 +11,22 @@ socket.on('blink', function (data) {
 
 socket.on('doubleBlink', function (data) {
   console.log(data);
+  walkThroughMenu();
 });
 
 
 socket.on('violentBlink', function (data) {
   console.log(data);
+  
+  if($("#backButton").hasClass("btn-primary")) {
+    goBack();
+  }
+  else if($("#rooms").hasClass("active")) {
+    selectRoom();
+  }
+  else {
+    toggleDeviceState();
+  }
 });
 
 
@@ -71,26 +82,32 @@ function walkThroughMenu(menu) {
   $backButton = $("#backButton");
 
   if(!$last.hasClass("active")) {
-    $next = $active.next();
+    
+    if($active.length == 0) {
+      $next = $menu.find("a").first();
+      $backButton.removeClass("btn-primary active").addClass("btn-default");
+    }
+    else {
+      $next = $active.next();
+    }
   }
   else {
-    if($backButton.is(":visible")) {
-      if($backButton.hasClass("btn-primary")) {
-        $backButton.removeClass("btn-primary").addClass("btn-default");
-        $next = $menu.find("a").first();  
-      }
-      else {
-        $(".menu-list.active a.active").removeClass(".active");
-        $backButton.removeClass("btn-default").addClass("btn-primary");  
+    if($("#devices").hasClass("active")) {
+      if(!$backButton.hasClass("btn-primary")) {
+        $next = $backButton;
+        $backButton.removeClass("btn-default active").addClass("btn-primary");
       }
     }
     else {
-      $next = $menu.find("a").first();  
+      $next = $menu.find("a").first();
     }
   }
 
   $active.removeClass("active");
-  $next.addClass("active");
+  if($next != $backButton) {
+    $next.addClass("active");
+  }
+  
 }
 
 
@@ -99,15 +116,20 @@ function selectRoom() {
   var $selected = $menu.find(".active").data("slug");
   var menuData = JSON.parse(localStorage.getItem("menuData"));
 
-  $(".menu-list").removeClass("active");
-  $("#devices").addClass("active");
+  if($menu.hasClass('active')) {
+    $(".menu-list").removeClass("active");
+    $("#devices").addClass("active");
 
-  menuData.forEach(function(room) {
-    if(room.roomSlug == $selected) {
-      buildDeviceMenu(room.roomDevices);
-      $("#backButton").show();
-    }
-  });
+    menuData.forEach(function(room) {
+      if(room.roomSlug == $selected) {
+        buildDeviceMenu(room.roomDevices);
+      }
+    });
+  
+    $("#devices").slideDown('fast');
+    $("#backButton").show();
+  
+  }
 }
 
 
@@ -150,6 +172,7 @@ function goBack() {
 
 
   $backButton.removeClass("btn-primary").addClass("btn-default").hide();
+  $("#devices").slideUp('fast');
   $deviceMenu.removeClass("active").empty();
   $roomsMenu.addClass("active");
 }
