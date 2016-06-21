@@ -24,7 +24,7 @@ socket.on('violentBlink', function (data) {
   else if($("#rooms").hasClass("active")) {
     selectRoom();
   }
-  else {
+  else if(!$("#backButton").hasClass("btn-primary") && $("#devices").hasClass("active")){
     toggleDeviceState();
   }
 });
@@ -161,7 +161,7 @@ function toggleDeviceState(state) {
   // Update localStorage info
   setTimeout(function () {
     getMenuData();
-  }, 200);
+  }, 300);
 }
 
 

@@ -48,12 +48,12 @@ function _toggleDeviceState(roomSlug, deviceId, callback) {
 						callback(null, device.deviceCurrState);
 					}
 					else {
-						callback({message: "Device not Found"});
+						callback({message: "Device not Found"}, null);
 					}
 				});
 			}
 			else {
-				callback({message: "Room not Found"});
+				callback({message: "Room not Found"}, null);
 			}
 		});
 
