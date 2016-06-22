@@ -4,11 +4,12 @@ var io = require('../server');
 function _filterSignal (dataSignal) {
 	if(dataSignal != 'undefined') {
 
-		if(dataSignal.poorSignal > 0){
+		if(dataSignal.poorSignalLevel > 0){
 			io.emit('error', {message: "Poor signal received from headset"});
 			return false;
 		}
 		else {
+			io.emit('error-clear');
 			return true;
 		}
 	}

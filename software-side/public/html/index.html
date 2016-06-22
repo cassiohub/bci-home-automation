@@ -14,6 +14,15 @@
 	
 	<section class="container-fluid">
 		<div class="row">
+			
+			<div class="col-md-6 ">
+				<div id="visual-return">
+					<button type="button" class="btn btn-primary blink">Blink</button>
+					<button type="button" class="btn btn-success doubleBlink">Double Blink</button>
+					<button type="button" class="btn btn-danger violentBlink">Strong Blink</button>
+				</div>
+			</div>
+
 			<div class="col-md-6 well menu-container">
 				<h1 class="page-header">Select the Room</h1>
 				
@@ -26,6 +35,11 @@
 					<button id="backButton" href="#" class="btn btn-default">Back</button>
 					<!-- <a href="#" class="btn btn-default">Next</a> -->
 				</nav>
+			</div>
+
+			<div class="alert alert-danger alert-dismissible" role="alert" id="error-alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Error!</strong> <span id="error-message"></span>.
 			</div>
 		</div>
 	</section>

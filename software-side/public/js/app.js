@@ -1,21 +1,21 @@
 var socket = io();
 
 socket.on('blink', function (data) {
-
+  visualReturn("blink");
   console.log(data);
-  
-  // socket.emit("clicou", {url: '/sala/led/ON'});
-
+  //socket.emit("clicou", {url: '/sala/led/ON'});
 });
 
 
 socket.on('doubleBlink', function (data) {
+  visualReturn("doubleBlink");
   console.log(data);
   walkThroughMenu();
 });
 
 
 socket.on('violentBlink', function (data) {
+  visualReturn("violentBlink");
   console.log(data);
   
   if($("#backButton").hasClass("btn-primary")) {
@@ -29,6 +29,24 @@ socket.on('violentBlink', function (data) {
   }
 });
 
+socket.on('error', function (data) {
+  //console.log(data);
+  var $error = $("#error-alert");
+
+  if(!$error.hasClass("active")) $error.addClass("active");
+  $error.find("#error-message").text(data.message);
+});
+
+socket.on('error-clear', function(data) {
+  var $error = $("#error-alert");
+
+  if($error.hasClass("active")) $error.removeClass("active");
+});
+
+function visualReturn(blinkType) {
+  $("#visual-return .btn").removeClass("active");
+  $("#visual-return").find("."+blinkType).toggleClass("active");
+}
 
 
 function persistLocalStorage(data) {
@@ -38,6 +56,7 @@ function persistLocalStorage(data) {
   localStorage.setItem("menuData", JSON.stringify(data));
 }
 
+
 function getMenuData(callback) {
   $.get("data/rooms.json", function(data) {
     persistLocalStorage(data);
@@ -46,6 +65,7 @@ function getMenuData(callback) {
     }
   });
 }
+
 
 function buildMenu(data) {
   var $menu = $("#rooms");
@@ -59,6 +79,7 @@ function buildMenu(data) {
     $menu.find("a").first().addClass("active");
   });
 }
+
 
 function buildDeviceMenu(data) {
   var $menuDevices = $("#devices");
@@ -74,6 +95,7 @@ function buildDeviceMenu(data) {
     $menuDevices.find("a").first().addClass("active");
   });
 }
+
 
 function walkThroughMenu(menu) {
   $menu = $(".menu-list.active");
@@ -176,7 +198,6 @@ function goBack() {
   $deviceMenu.removeClass("active").empty();
   $roomsMenu.addClass("active");
 }
-
 
 
 function init() {

@@ -10,6 +10,11 @@
 	display: none;
 }
 
+#visual-return {
+	padding-top: 30px;
+	text-align: center;
+}
+
 
 /* Footer Navigator */
 .navigator {
@@ -25,4 +30,17 @@
 
 #backButton {
   display: none;
+}
+
+
+#error-alert {
+	position: fixed;
+	bottom: -80px;
+	width: 94%;
+	left: 3%;
+	transition: all 500ms;
+}
+
+#error-alert.active {
+	bottom: 20px;
 }

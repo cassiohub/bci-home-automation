@@ -2,7 +2,7 @@ from NeuroPy import NeuroPy
 import serial
 
 try:
-    neuro = NeuroPy("COM5", 57600)
+    neuro = NeuroPy("COM3", 57600)
     neuro.start()
     print ("Neuropy found on COM5")
 except:
