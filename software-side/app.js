@@ -10,7 +10,7 @@ var client = nodeThinkGear.createClient({
 
 var lastBlink = false;
 client.on("data", function(data) {
-	//console.log(data);
+	console.log(data);
 	
 	if(filterInput.filterSignal(data)) {
 		//if(filterInput.filterAttention(data)) {
