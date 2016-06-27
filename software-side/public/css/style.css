@@ -1,6 +1,7 @@
 .menu-container {
-  margin: 60px auto;
-  float: none;
+	width: 100%;
+  	max-width: 600px;
+  	margin: auto;
 }
 .menu-container-box {
   overflow: hidden
@@ -11,7 +12,7 @@
 }
 
 #visual-return {
-	padding-top: 30px;
+	margin: 40px auto; 
 	text-align: center;
 }
 
@@ -43,4 +44,44 @@
 
 #error-alert.active {
 	bottom: 20px;
+}
+
+
+
+/* Calibration Page */
+#blinks-feedback {
+	padding: 10px;
+	background: white;
+	border-radius: 5px;
+	text-align: center;
+	display: none;
+}
+
+.blink-node {
+	width: 70px;
+	height: 70px;
+	display: inline-block;
+	border-radius: 50%;
+	line-height: 64px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+	margin:10px;
+
+	color: white;
+}
+
+.blink-node.blink {
+	border: 3px solid #265782;
+	background: #337ab7;
+}
+
+.blink-node.doubleBlink {
+	border: 3px solid #458645;
+	background: #5cb85c;
+}
+
+.blink-node.strongBlink {
+	border: 3px solid #af4340;
+	background: #d9534f;
 }

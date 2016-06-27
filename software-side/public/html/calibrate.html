@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BCI - Home Automation</title>
+	<title>BCI - Home Automation - Calibrate</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,6 +14,27 @@
 	
 	<section class="container-fluid">
 		<div class="row">
+
+			<div id="modal-intro" class="modal fade" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			        	<span aria-hidden="true">&times;</span>
+			        </button>
+			        
+			        <h4 class="modal-title">Headset Calibration</h4>
+			      </div>
+
+			      <div class="modal-body">
+			        <p>To better read the data from the headset, will need to calibrate it. To do so, you'll have to follow the instructions and blink your eyes when requested.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button id="startButton" type="button" class="btn btn-primary" data-dismiss="modal">Start Calibration</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 			
 			<div class="col-md-12">
 				<div id="visual-return">
@@ -25,13 +46,15 @@
 
 			<div class="col-md-12">
 				<div class="well menu-container">
-					<h1 class="page-header">Select the Room</h1>
+					<h1 class="page-header">Blinking Calibratation <br>
+					<small>Blink normally while we collect data of your eye blink strength</small></h1>
 					
-					<div class="menu-container-box">
-						<div id="rooms" class="list-group menu-list active"></div>
-						<div id="devices" class="list-group menu-list"></div>
+					<div id="blinks-feedback">
+						<!-- <span class="blink-node blink">10</span>
+						<span class="blink-node doubleBlink">50</span>
+						<span class="blink-node strongBlink">120</span> -->
 					</div>
-
+					
 					<nav class="navigator">
 						<button id="backButton" href="#" class="btn btn-default">Back</button>
 						<!-- <a href="#" class="btn btn-default">Next</a> -->
@@ -49,6 +72,6 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/lib/jquery-2.2.4.min.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
-	<script src="js/app.js"></script>
+	<script src="js/calibrate.js"></script>
 </body>
 </html>

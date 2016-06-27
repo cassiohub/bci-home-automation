@@ -23,6 +23,11 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/html/index.html');
 });
 
+app.get('/calibrate', function (req, res) {
+  res.sendFile(__dirname + '/public/html/calibrate.html');
+});
+
+
 var apiRoutes = require('./api/apiRoutes');
 app.use("/api", apiRoutes);
 

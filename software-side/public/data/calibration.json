@@ -2,14 +2,14 @@
 	
 	"blink": {
 		"calibration": [55, 45, 67, 89, 78],
-		"avarageStrenght": 40,
+		"avarageStrength": 40,
 	},
 	"doubleBlink": {
-		"avarageStrenght": 90,
+		"calibration": [55, 45, 67, 89, 78],
 		"averageDelay": 400,
 	},
 	"strongBlink": {
 		"calibration": [155, 145, 167, 189],
-		"avarageStrenght": 100
+		"avarageStrength": 100
 	}
 }

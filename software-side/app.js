@@ -25,4 +25,8 @@ client.on("data", function(data) {
 	}
 });
 
-client.connect();
+setInterval(function() {
+	io.emit('blink', { blinkStrength: Math.floor(Math.random() * 10), doubleBlink: false });
+}, 1000);	
+
+//client.connect();
