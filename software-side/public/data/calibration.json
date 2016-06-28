@@ -1,12 +1,12 @@
 {
-	
+	"rawBlink": "true",	
 	"blink": {
 		"calibration": [55, 45, 67, 89, 78],
-		"avarageStrength": 40,
+		"avarageStrength": 40
 	},
 	"doubleBlink": {
 		"calibration": [55, 45, 67, 89, 78],
-		"averageDelay": 400,
+		"averageDelay": 400
 	},
 	"strongBlink": {
 		"calibration": [155, 145, 167, 189],

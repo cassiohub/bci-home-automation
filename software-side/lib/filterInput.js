@@ -1,4 +1,10 @@
 var io = require('../server');
+var calibrationData = require('../public/data/calibration.json');
+
+var STRONG_BLINK = calibrationData.strongBlink.avarageStrength;
+var RAW_BLINK = calibrationData.rawBlink;
+
+console.log(RAW_BLINK);
 
 
 function _filterSignal (dataSignal) {
@@ -31,34 +37,38 @@ function _filterAttention(dataSignal) {
 }
 
 function _filterBlink (lastBlink, blinkData) {
-
-	if(lastBlink == false) {
-		lastBlink = new Date().getTime();	
+	if(RAW_BLINK) {
+		io.emit("rawBlink", { blinkStrength: blinkData });
 	}
-
 	else {
-		var currBlink = new Date().getTime();
-		var diff = currBlink - lastBlink;
-		
-		if(blinkData > 90) {
-			if(diff > 500) {
-				io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
-				return lastBlink;
-			}
+		if(lastBlink == false) {
+			lastBlink = new Date().getTime();	
 		}
 
-		if(diff >= 0 && diff <= 400) {
-			if(blinkData < 90) {
-				io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
-				return lastBlink;
-			}
-		}
 		else {
-			io.emit('blink', { blinkStrength: blinkData, doubleBlink: false });
-		}
+			var currBlink = new Date().getTime();
+			var diff = currBlink - lastBlink;
+			
+			if(blinkData > STRONG_BLINK) {
+				if(diff > 500) {
+					io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
+					return lastBlink;
+				}
+			}
 
-		lastBlink = currBlink;
-		return lastBlink;
+			if(diff >= 0 && diff <= 400) {
+				if(blinkData < STRONG_BLINK) {
+					io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
+					return lastBlink;
+				}
+			}
+			else {
+				io.emit('blink', { blinkStrength: blinkData, doubleBlink: false });
+			}
+
+			lastBlink = currBlink;
+			return lastBlink;
+		}
 	}
 }
 

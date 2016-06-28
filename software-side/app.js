@@ -24,9 +24,19 @@ client.on("data", function(data) {
 		// }
 	}
 });
+var count = 0;
+setTimeout(function() {
+	var intervalo = setInterval(function() {
+		filterInput.filterBlink(false, Math.floor(Math.random() * 10));
+		//io.emit('data', { blinkStrength: Math.floor(Math.random() * 10), doubleBlink: false });
+		count++;
+		console.log(count)
+		if(count == 18) {
+			console.log("parou")
+			clearInterval(intervalo);
+		}
+	}, 1000);	
+}, 3000)
 
-setInterval(function() {
-	io.emit('blink', { blinkStrength: Math.floor(Math.random() * 10), doubleBlink: false });
-}, 1000);	
 
 //client.connect();

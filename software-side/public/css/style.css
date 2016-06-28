@@ -22,14 +22,9 @@
   display: block;
   height: 35px;
 }
-.navigator > a:first-child {
-  float: left;
-}
-.navigator > a:last-child {
-  float: right;
-}
 
-#backButton {
+
+#backButton, #nextButton{
   display: none;
 }
 
@@ -49,8 +44,10 @@
 
 
 /* Calibration Page */
-#blinks-feedback {
+
+.white-board {
 	padding: 10px;
+	margin-bottom: 20px;
 	background: white;
 	border-radius: 5px;
 	text-align: center;
@@ -84,4 +81,33 @@
 .blink-node.strongBlink {
 	border: 3px solid #af4340;
 	background: #d9534f;
+}
+
+#double-blink-feedback {
+	display: block;
+}
+
+.countdown-box {
+    text-align: center;
+    font-size: 60px;
+    line-height: 80px;
+}
+.attempts-list {
+	display: flex;
+    justify-content: center;
+}
+.attempts-list li {
+	background: #ccc;
+	margin: 10px;
+	width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px dashed #c3c3c3;
+    opacity: 0.6;
+}
+.attempts-list li span {
+    display: inline-block;
+    line-height: 41px;
+    font-size: 20px;
+    color: #808080;
 }
