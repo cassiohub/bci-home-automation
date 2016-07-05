@@ -39,7 +39,6 @@ socket.on('error', function (data) {
 
 socket.on('error-clear', function(data) {
   var $error = $("#error-alert");
-
   if($error.hasClass("active")) $error.removeClass("active");
 });
 

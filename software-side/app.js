@@ -24,6 +24,7 @@ client.on("data", function(data) {
 		// }
 	}
 });
+
 var count = 0;
 setTimeout(function() {
 	var intervalo = setInterval(function() {
@@ -34,9 +35,41 @@ setTimeout(function() {
 		if(count == 18) {
 			console.log("parou")
 			clearInterval(intervalo);
+			strongBlinkTest();
 		}
 	}, 1000);	
-}, 3000)
+}, 3000);
+
+function strongBlinkTest() {
+	var count = 0;
+	setTimeout(function() {
+		var intervalo = setInterval(function() {
+			filterInput.filterBlink(false, Math.floor(Math.random() * 100));
+			count++;
+			console.log(count)
+			if(count == 18) {
+				console.log("parou")
+				clearInterval(intervalo);
+				doubleBlinkTest();
+			}
+		}, 1000);	
+	}, 5000);
+}
+
+function doubleBlinkTest() {
+	var count = 0;
+	setTimeout(function() {
+		var intervalo = setInterval(function() {
+			filterInput.filterBlink(false, Math.floor(Math.random() * 100));
+			count++;
+			console.log(count)
+			if(count == 2) {
+				console.log("parou")
+				clearInterval(intervalo);
+			}
+		}, 300);
+	}, 5000);
+}
 
 
 //client.connect();

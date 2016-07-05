@@ -3,6 +3,7 @@ var calibrationData = require('../public/data/calibration.json');
 
 var STRONG_BLINK = calibrationData.strongBlink.avarageStrength;
 var RAW_BLINK = calibrationData.rawBlink;
+var DOUBLE_BLINK_DELAY = calibrationData.doubleBlink.averageDelay;
 
 console.log(RAW_BLINK);
 
@@ -56,7 +57,7 @@ function _filterBlink (lastBlink, blinkData) {
 				}
 			}
 
-			if(diff >= 0 && diff <= 400) {
+			if(diff >= 0 && diff <= DOUBLE_BLINK_DELAY) {
 				if(blinkData < STRONG_BLINK) {
 					io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
 					return lastBlink;
