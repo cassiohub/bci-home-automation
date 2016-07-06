@@ -4,12 +4,12 @@
   "description": "Software part of BCI - Home Automation Project. It takes care of a web server and the serial signal receiver for NeuroSky Headset.",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.15.1",
+    "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "jade": "^1.11.0",
-    "node-thinkgear": "0.0.1",
     "request": "^2.72.0",
-    "socket.io": ""
+    "socket.io": "",
+    "node-thinkgear-sockets": ""
   },
   "devDependencies": {},
   "scripts": {

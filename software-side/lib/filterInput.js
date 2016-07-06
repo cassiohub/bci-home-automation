@@ -35,7 +35,9 @@ function _filterAttention(dataSignal) {
 }
 
 function _filterBlink (lastBlink, blinkData) {
-	if(RAW_BLINK) {
+	console.log(DOUBLE_BLINK_DELAY);
+
+	if(RAW_BLINK == true) {
 		io.emit("rawBlink", { blinkStrength: blinkData });
 	}
 	else {

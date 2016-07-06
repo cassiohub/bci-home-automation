@@ -1,15 +1,1 @@
-{
-	"rawBlink": "true",	
-	"blink": {
-		"calibration": [55, 45, 67, 89, 78],
-		"avarageStrength": 40
-	},
-	"doubleBlink": {
-		"calibration": [55, 45, 67, 89, 78],
-		"averageDelay": 400
-	},
-	"strongBlink": {
-		"calibration": [155, 145, 167, 189],
-		"avarageStrength": 100
-	}
-}
+{"blink":{"calibration":["46","59","49","54","45","65","59","52","51","58","69","61","44","60","42"],"avarageStrength":"54"},"doubleBlink":{"averageDelay":"349"},"strongBlink":{"calibration":["255","255","255","255","255","254","249","238","249","210","139","232","238","106","199"],"avarageStrength":"225"},"rawBlink":"true"}

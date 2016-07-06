@@ -1,6 +1,7 @@
 var express = require("express");
 var Router = express.Router();
 var devicesDAO = require("../lib/devicesDAO");
+var blinkHistoryDAO = require("../lib/blinkHistoryDAO");
 
 Router.get("/toggleDeviceState", function(req, res, next) {
 	var roomSlug = req.query.slug;
@@ -16,6 +17,12 @@ Router.get("/toggleDeviceState", function(req, res, next) {
 			}
 		});
 	}
+});
+
+Router.post("/saveBlinkHistory", function(req, res) {
+	console.log(req.body);
+	blinkHistoryDAO.saveBlinkHistory(req.body);
+	res.writeHeader(200);
 });
 
 

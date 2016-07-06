@@ -1,17 +1,22 @@
 var express = require('express');
 var http = require('http');
 var request = require('request');
+var bodyParser = require("body-parser");
 
 var app = express();
 var server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
 
-
-
 server.listen(8080, function() {
 	console.log("Server listen on http://localhost:8080/");
 });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.use(express.static('public'));
 app.use(logErrors);
@@ -27,6 +32,9 @@ app.get('/calibrate', function (req, res) {
   res.sendFile(__dirname + '/public/html/calibrate.html');
 });
 
+app.get("/blinkHistory", function(req, res) {
+	res.sendFile(__dirname + "/public/data/calibration.json");
+});
 
 var apiRoutes = require('./api/apiRoutes');
 app.use("/api", apiRoutes);

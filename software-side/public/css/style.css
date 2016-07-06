@@ -118,3 +118,10 @@
 	border-color: #4caf50;
 	color: white; 
 }
+
+.attempts-list li.invalid {
+	background: #fd2d2d;
+	opacity: 1;
+	border-color: #fd2d2d;
+	color: white; 
+}

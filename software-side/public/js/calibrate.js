@@ -50,19 +50,34 @@ socket.on('rawBlink', function(data) {
       $('#modal-double').modal("show");
       $('#startDoubleButton').focus()
       $('#blinks-feedback').empty().hide();
-      $('.page-header small').text("After the countdown, perform a double blink.");
+      $('.page-header small').text("Perform a double blink.");
     }
   }
   else if(calibrationState == "doubleBlink") {
     var detectionReturn = doubleBlinkDetection(blinkHistory, data);
-    GLOBAL_LAST_BLINK = detectionReturn.lastBlink;
-    blinkHistory = detectionReturn.blinkHistory;
 
-    $(".attempts-list li").addClass("valid");
-    setTimeout(function() {
-      $("#modal-done").modal("show");
-      calibrationState = "done";
-    }, 500);
+    if(detectionReturn.lastBlink) {
+      GLOBAL_LAST_BLINK = detectionReturn.lastBlink;
+      blinkHistory = detectionReturn.blinkHistory;
+
+      if(blinkHistory['doubleBlink'].averageDelay > 200 && blinkHistory['doubleBlink'].averageDelay < 500) {
+        $(".attempts-list li").removeClass("invalid").addClass("valid");
+        saveBlinkHistory(blinkHistory);
+        setTimeout(function() {
+          $("#modal-done").modal("show");
+          calibrationState = "done";
+        }, 500);
+      }
+      else {
+        GLOBAL_LAST_BLINK = false;
+        detectionReturn = null;
+        $(".attempts-list li").removeClass("valid").addClass("invalid");
+        socket.emit("error", {message: "Your double blink is too slow. Try to blink twice in a row in a faster manner"});
+      }
+    }
+    else {
+      detectionReturn = doubleBlinkDetection(blinkHistory, data);
+    }
   }
 });
 
@@ -177,6 +192,7 @@ function doubleBlinkDetection(blinkHistory, blinkData) {
 
   if(GLOBAL_LAST_BLINK == false) {
     GLOBAL_LAST_BLINK = new Date().getTime();
+    return true;
   }
   else {
     var currBlink = new Date().getTime();
@@ -186,18 +202,24 @@ function doubleBlinkDetection(blinkHistory, blinkData) {
       if(blinkData.blinkStrength < blinkHistory.strongBlink.avarageStrength) {
         blinkHistory.doubleBlink.averageDelay = diff;
         var doubleBlinkReturn = {
-          lastBlink:lastBlink, 
+          lastBlink: GLOBAL_LAST_BLINK, 
           blinkHistory: blinkHistory
         };
         console.log("doubleBlinkReturn", doubleBlinkReturn);
-        return ;
+        return doubleBlinkReturn;
       }
     }
-    else {
-      blinkHistory.doubleBlink.averageDelay = 300;
-      return {lastBlink:lastBlink, blinkHistory: blinkHistory};
-    }
   }
+}
+
+function saveBlinkHistory(blinkHistory) {
+  blinkHistory['rawBlink'] = false;
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8080/api/saveBlinkHistory",
+    data: blinkHistory
+  });
 }
 
 initCalibration();
