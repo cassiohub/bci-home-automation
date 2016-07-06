@@ -5,9 +5,6 @@ var STRONG_BLINK = calibrationData.strongBlink.avarageStrength;
 var RAW_BLINK = calibrationData.rawBlink;
 var DOUBLE_BLINK_DELAY = calibrationData.doubleBlink.averageDelay;
 
-console.log(RAW_BLINK);
-
-
 function _filterSignal (dataSignal) {
 	if(dataSignal != 'undefined') {
 

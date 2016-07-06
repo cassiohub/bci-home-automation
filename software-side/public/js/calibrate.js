@@ -3,12 +3,19 @@ var socket = io();
 socket.on('rawBlink', function(data) {
   if(calibrationState == "blink") {
     if(blinkHistory['blink'].calibration.length < NUM_BLINKS) {
-      if($("#blinks-feedback").is(":visible") == true) {
-        blinkHistory = saveBlink(blinkHistory, data, "blink");
+      if(data.blinkStrength <= 80) {
+        if($("#blinks-feedback").is(":visible") == true) {
+          socket.emit("error-clear");
+          blinkHistory = saveBlink(blinkHistory, data, "blink");
+        }
+        else {
+          socket.emit("error-clear");
+          $("#blinks-feedback").show();
+          blinkHistory = saveBlink(blinkHistory, data, "blink");
+        }
       }
       else {
-        $("#blinks-feedback").show();
-        blinkHistory = saveBlink(blinkHistory, data, "blink");
+        socket.emit("error", {message: "Your eye blink pattern is too strong. Try to blink your eyes in a gentle manner"});
       }
     }
     else {
@@ -22,12 +29,19 @@ socket.on('rawBlink', function(data) {
   }
   else if(calibrationState == "strongBlink") {
     if(blinkHistory['strongBlink'].calibration.length < NUM_BLINKS) {
-      if($("#blinks-feedback").is(":visible") == true) {
-        blinkHistory = saveBlink(blinkHistory, data, "strongBlink");
+      if(data.blinkStrength > blinkHistory['blink'].avarageStrength+40) {
+        if($("#blinks-feedback").is(":visible") == true) {
+          socket.emit("error-clear");
+          blinkHistory = saveBlink(blinkHistory, data, "strongBlink");
+        }
+        else {
+          socket.emit("error-clear");
+          $("#blinks-feedback").show();
+          blinkHistory = saveBlink(blinkHistory, data, "strongBlink");
+        }
       }
       else {
-        $("#blinks-feedback").show();
-        blinkHistory = saveBlink(blinkHistory, data, "strongBlink");
+        socket.emit("error", {message: "Your eye blink pattern is not strong enough now. Try to blink your eyes in a stronger manner"});
       }
     }
     else {
@@ -85,14 +99,12 @@ socket.on('violentBlink', function (data) {
 
 socket.on('error', function (data) {
   var $error = $("#error-alert");
-
   if(!$error.hasClass("active")) $error.addClass("active");
   $error.find("#error-message").text(data.message);
 });
 
 socket.on('error-clear', function(data) {
   var $error = $("#error-alert");
-
   if($error.hasClass("active")) $error.removeClass("active");
 });
 

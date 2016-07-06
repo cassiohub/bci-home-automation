@@ -1,31 +1,41 @@
-var nodeThinkGear = require('node-thinkgear');
+//var nodeThinkGear = require('node-thinkgear');
+var nodeThinkGear = require('node-thinkgear-sockets');
 var io = require('./server');
 var filterInput = require('./lib/filterInput');
 
-var client = nodeThinkGear.createClient({
+/*var client = nodeThinkGear.createClient({
 	appName:'NodeNeuroSky',
 	appKey:'0fc4141b4b45c675cc8d3a765b8d71c5bde9390'
-});
+});*/
+var client = nodeThinkGear.createClient({ enableRawOutput: true });
 
 
 var lastBlink = false;
-client.on("data", function(data) {
-	console.log(data);
+// client.on("data", function(data) {
+// 	console.log(data);
 	
+// 	if(filterInput.filterSignal(data)) {
+// 		//if(filterInput.filterAttention(data)) {
+// 			if(data.blinkStrength) {
+// 				var lastBlinkReturn = filterInput.filterBlink(lastBlink, data.blinkStrength);
+// 				lastBlink = lastBlinkReturn;
+// 			}
+// 		// }
+// 		// else {
+// 		// 	io.emit("message", {message: "Not enough attention!"})
+// 		// }
+// 	}
+// });
+
+client.on("blink_data", function(data) {
 	if(filterInput.filterSignal(data)) {
-		//if(filterInput.filterAttention(data)) {
-			if(data.blinkStrength) {
-				var lastBlinkReturn = filterInput.filterBlink(lastBlink, data.blinkStrength);
-				lastBlink = lastBlinkReturn;
-			}
-		// }
-		// else {
-		// 	io.emit("message", {message: "Not enough attention!"})
-		// }
+		console.log(data);
+		var lastBlinkReturn = filterInput.filterBlink(lastBlink, data.blinkStrength);
+		lastBlink = lastBlinkReturn;
 	}
 });
 
-var count = 0;
+/*var count = 0;
 setTimeout(function() {
 	var intervalo = setInterval(function() {
 		filterInput.filterBlink(false, Math.floor(Math.random() * 10));
@@ -39,7 +49,6 @@ setTimeout(function() {
 		}
 	}, 1000);	
 }, 3000);
-
 function strongBlinkTest() {
 	var count = 0;
 	setTimeout(function() {
@@ -55,7 +64,6 @@ function strongBlinkTest() {
 		}, 1000);	
 	}, 5000);
 }
-
 function doubleBlinkTest() {
 	var count = 0;
 	setTimeout(function() {
@@ -69,7 +77,7 @@ function doubleBlinkTest() {
 			}
 		}, 300);
 	}, 5000);
-}
+}*/
 
 
-//client.connect();
+client.connect();
