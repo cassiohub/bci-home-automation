@@ -1,6 +1,7 @@
 var socket = io();
 
 socket.on('rawBlink', function(data) {
+  console.log(calibrationState);
   if(calibrationState == "blink") {
     if(blinkHistory['blink'].calibration.length < NUM_BLINKS) {
       if(data.blinkStrength <= 80) {
@@ -21,7 +22,7 @@ socket.on('rawBlink', function(data) {
     else {
       blinkHistory = blinkAvarageStrength(blinkHistory, "blink");
 
-      $('#modal-strong').modal("show");
+      $('#modal-strong').modal({backdrop: 'static', keyboard: false});
       $('#startStrongButton').focus()
       $('#blinks-feedback').empty().hide();
       $('.page-header small').text("Blink strongly while we collect the data");
@@ -47,7 +48,7 @@ socket.on('rawBlink', function(data) {
     else {
       blinkHistory = blinkAvarageStrength(blinkHistory, "strongBlink");
 
-      $('#modal-double').modal("show");
+      $('#modal-double').modal({backdrop: 'static', keyboard: false});
       $('#startDoubleButton').focus()
       $('#blinks-feedback').empty().hide();
       $('.page-header small').text("Perform a double blink.");
@@ -55,6 +56,7 @@ socket.on('rawBlink', function(data) {
   }
   else if(calibrationState == "doubleBlink") {
     var detectionReturn = doubleBlinkDetection(blinkHistory, data);
+    console.log(detectionReturn);
 
     if(detectionReturn.lastBlink) {
       GLOBAL_LAST_BLINK = detectionReturn.lastBlink;
@@ -64,7 +66,7 @@ socket.on('rawBlink', function(data) {
         $(".attempts-list li").removeClass("invalid").addClass("valid");
         saveBlinkHistory(blinkHistory);
         setTimeout(function() {
-          $("#modal-done").modal("show");
+          $("#modal-done").modal({backdrop: 'static', keyboard: false});
           calibrationState = "done";
         }, 500);
       }
@@ -77,38 +79,52 @@ socket.on('rawBlink', function(data) {
     }
     else {
       detectionReturn = doubleBlinkDetection(blinkHistory, data);
+      if(blinkHistory['doubleBlink'].averageDelay > 200 && blinkHistory['doubleBlink'].averageDelay < 500) {
+        $(".attempts-list li").removeClass("invalid").addClass("valid");
+        saveBlinkHistory(blinkHistory);
+        setTimeout(function() {
+          $("#modal-done").modal({backdrop: 'static', keyboard: false});
+          calibrationState = "done";
+        }, 500);
+      }
+      else {
+        GLOBAL_LAST_BLINK = false;
+        detectionReturn = null;
+        $(".attempts-list li").removeClass("valid").addClass("invalid");
+        socket.emit("error", {message: "Your double blink is too slow. Try to blink twice in a row in a faster manner"});
+      }
     }
   }
 });
 
 
 
-socket.on('blink', function (data) {
-  console.log(data);
+// socket.on('blink', function (data) {
+//   console.log(data);
 
-  if(calibrationState && blinkHistory['blink'].calibration.length != NUM_BLINKS) {
-    if($("#blinks-feedback").is(":visible") == true) {
-      blinkHistory = saveBlink(blinkHistory, data, "blink");
-    }
-    else {
-      $("#blinks-feedback").show();
-      blinkHistory = saveBlink(blinkHistory, data, "blink");
-    }  
-  }
+//   if(calibrationState && blinkHistory['blink'].calibration.length != NUM_BLINKS) {
+//     if($("#blinks-feedback").is(":visible") == true) {
+//       blinkHistory = saveBlink(blinkHistory, data, "blink");
+//     }
+//     else {
+//       $("#blinks-feedback").show();
+//       blinkHistory = saveBlink(blinkHistory, data, "blink");
+//     }  
+//   }
 
-  if(blinkHistory['blink'].calibration.length == NUM_BLINKS) {
-    calibrationState = !calibrationState;
-    $("#nextButton").show();
-  }  
-});
+//   if(blinkHistory['blink'].calibration.length == NUM_BLINKS) {
+//     calibrationState = !calibrationState;
+//     $("#nextButton").show();
+//   }  
+// });
 
-socket.on('doubleBlink', function (data) {
-  console.log(data);
-});
+// socket.on('doubleBlink', function (data) {
+//   console.log(data);
+// });
 
-socket.on('violentBlink', function (data) {
-  console.log(data);
-});
+// socket.on('violentBlink', function (data) {
+//   console.log(data);
+// });
 
 
 
@@ -168,9 +184,8 @@ function blinkAvarageStrength(blinkHistory, blinkType) {
 
 
 function initCalibration() {
-  $('#modal-intro').modal('show');
+  $('#modal-intro').modal({backdrop: 'static', keyboard: false});
   $('#startButton').focus();
-
 
   $('#startButton').on('click', function(){
     calibrationState = "blink";
@@ -189,16 +204,18 @@ function initCalibration() {
 
 GLOBAL_LAST_BLINK = false;
 function doubleBlinkDetection(blinkHistory, blinkData) {
-
+  console.log(GLOBAL_LAST_BLINK);
+  
   if(GLOBAL_LAST_BLINK == false) {
     GLOBAL_LAST_BLINK = new Date().getTime();
     return true;
   }
   else {
     var currBlink = new Date().getTime();
-    var diff = currBlink - GLOBAL_LAST_BLINK;
+    console.log(currBlink)
+    var diff = currBlink - (GLOBAL_LAST_BLINK-400);
 
-    if(diff >= 0 && (diff >= 250 || diff <= 400)) {
+    if(diff >= 250 && diff <= 500) {
       if(blinkData.blinkStrength < blinkHistory.strongBlink.avarageStrength) {
         blinkHistory.doubleBlink.averageDelay = diff;
         var doubleBlinkReturn = {
@@ -209,12 +226,15 @@ function doubleBlinkDetection(blinkHistory, blinkData) {
         return doubleBlinkReturn;
       }
     }
+    else {
+      GLOBAL_LAST_BLINK = false;
+      return true;
+    }
   }
 }
 
 function saveBlinkHistory(blinkHistory) {
   blinkHistory['rawBlink'] = false;
-
   $.ajax({
     type: "POST",
     url: "http://localhost:8080/api/saveBlinkHistory",
@@ -222,4 +242,22 @@ function saveBlinkHistory(blinkHistory) {
   });
 }
 
-initCalibration();
+function getBlinkHistory(callback) {
+  $.get("http://localhost:8080/data/calibration.json").success(function(data) {
+    if(callback) {callback(data)}
+    return data;
+  });
+}
+
+getBlinkHistory(function(blinkHistory) {
+  if(blinkHistory.rawBlink == "false") {
+    $("#modal-new-calibration").modal({backdrop: 'static', keyboard: false});
+  }
+  else {
+    initCalibration();
+  }
+});
+
+$("#startNewButton").on("click", function() {
+  $.get("http://localhost:8080/api/resetBlinkHistory").success(initCalibration());
+});

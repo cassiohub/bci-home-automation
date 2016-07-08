@@ -25,5 +25,10 @@ Router.post("/saveBlinkHistory", function(req, res) {
 	res.writeHeader(200);
 });
 
+Router.get("/resetBlinkHistory", function(req, res) {
+	blinkHistoryDAO.resetBlinkHistory();
+	res.writeHeader(200);
+});
+
 
 module.exports = Router
