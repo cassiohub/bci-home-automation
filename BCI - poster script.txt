@@ -1,0 +1,11 @@
+BCI – Home Automation
+Poster Script
+
+Introduction: this topic shall contain the project explanation, the problem exposition (e.g. the lack of assistance to people with paralysis), objective of the project, expected consequences and results, and advantages.
+Methods: this topic shall contain how the project was developed, what was the difficulties, and what had to be altered from the original idea.
+
+Results: this topic shall contain the achieved result and what it is able to do.
+
+Operation: How is it working.
+
+Conclusion: this topic shall contain the future perspectives, which may be improved, disadvantages and advantages, and if the project has viability and practicability. 
