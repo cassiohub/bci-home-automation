@@ -1,5 +1,11 @@
 var socket = io();
 
+socket.on('graph_data', function (data) {
+  console.log(data);
+  console.log(new Date().getTime());
+  tick(data.attention, data.meditation);
+});
+
 socket.on('blink', function (data) {
   visualReturn("blink");
   console.log(data);
@@ -17,7 +23,7 @@ socket.on('doubleBlink', function (data) {
 socket.on('violentBlink', function (data) {
   visualReturn("violentBlink");
   console.log(data);
-  
+
   if($("#backButton").hasClass("btn-primary")) {
     goBack();
   }
@@ -60,7 +66,7 @@ function getMenuData(callback) {
   $.get("data/rooms.json", function(data) {
     persistLocalStorage(data);
     if(callback){
-      callback(data);  
+      callback(data);
     }
   });
 }
@@ -103,7 +109,7 @@ function walkThroughMenu(menu) {
   $backButton = $("#backButton");
 
   if(!$last.hasClass("active")) {
-    
+
     if($active.length == 0) {
       $next = $menu.find("a").first();
       $backButton.removeClass("btn-primary active").addClass("btn-default");
@@ -128,7 +134,7 @@ function walkThroughMenu(menu) {
   if($next != $backButton) {
     $next.addClass("active");
   }
-  
+
 }
 
 
@@ -146,10 +152,10 @@ function selectRoom() {
         buildDeviceMenu(room.roomDevices);
       }
     });
-  
+
     $("#devices").slideDown('fast');
     $("#backButton").show();
-  
+
   }
 }
 
@@ -178,7 +184,7 @@ function toggleDeviceState(state) {
   }
 
   socket.emit("toggleDeviceState", deviceNewState);
-  
+
   // Update localStorage info
   setTimeout(function () {
     getMenuData();

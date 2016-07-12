@@ -12,7 +12,7 @@
 }
 
 #visual-return {
-	margin: 40px auto; 
+	margin: 40px auto;
 	text-align: center;
 }
 
@@ -116,12 +116,40 @@
 	background: #4caf50;
 	opacity: 1;
 	border-color: #4caf50;
-	color: white; 
+	color: white;
 }
 
 .attempts-list li.invalid {
 	background: #fd2d2d;
 	opacity: 1;
 	border-color: #fd2d2d;
-	color: white; 
+	color: white;
+}
+
+.graph .chart {
+	width:100%;
+	max-width: 600px;
+}
+.graph .axis {
+    stroke-width: 1;
+}
+
+.graph .axis .tick line {
+    stroke: black;
+}
+
+.graph .axis .tick text {
+    fill: black;
+    font-size: 0.7em;
+}
+
+.graph .axis .domain {
+    fill: none;
+    stroke: black;
+}
+
+.graph .group {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5;
 }

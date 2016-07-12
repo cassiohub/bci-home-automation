@@ -11,22 +11,23 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-	
+
 	<section class="container-fluid">
 		<div class="row">
-			
+
 			<div class="col-md-12">
 				<div id="visual-return">
-					<button type="button" class="btn btn-primary blink">Blink</button>
+					<!-- <button type="button" class="btn btn-primary blink">Blink</button>
 					<button type="button" class="btn btn-success doubleBlink">Double Blink</button>
-					<button type="button" class="btn btn-danger violentBlink">Strong Blink</button>
+					<button type="button" class="btn btn-danger violentBlink">Strong Blink</button> -->
+					<div class="graph"></div>
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<div class="well menu-container">
 					<h1 class="page-header">Select the Room</h1>
-					
+
 					<div class="menu-container-box">
 						<div id="rooms" class="list-group menu-list active"></div>
 						<div id="devices" class="list-group menu-list"></div>
@@ -49,6 +50,8 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/lib/jquery-2.2.4.min.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="js/visual_return.js"></script>
 	<script src="js/app.js"></script>
 </body>
 </html>
