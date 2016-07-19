@@ -35,4 +35,4 @@ client.on("blink_data", function(data) {
 	}
 });
 
-client.connect();
+//client.connect();

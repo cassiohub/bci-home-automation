@@ -57,12 +57,12 @@ io.on('connection', function (socket) {
 		});
 
 
-		var arduinoURL = "http://192.168.0.99/?"+currState;
+		//var arduinoURL = "http://192.168.0.99/?"+currState;
+		var arduinoURL = "http://192.168.0.99/?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;
 		console.log(arduinoURL)
 		request(arduinoURL, function(data) {
 			//console.log("requested to arduino", data);
 		});
-
 	});
 });
 
