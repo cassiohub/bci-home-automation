@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var http = require('http');
 var request = require('request');
@@ -8,8 +9,9 @@ var server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
 
-server.listen(8080, function() {
-	console.log("Server listen on http://localhost:8080/");
+var port = process.env.SERVER_PORT;
+server.listen(port, function() {
+	console.log("Server listen on http://localhost:"+server.address().port);
 });
 
 // parse application/x-www-form-urlencoded
@@ -36,9 +38,16 @@ app.get("/blinkHistory", function(req, res) {
 	res.sendFile(__dirname + "/public/data/calibration.json");
 });
 
+app.get("/table", function(req, res) {
+	res.sendFile(__dirname + "/public/html/table.html");
+});
+
+app.get("/table-db", function(req, res) {
+	res.sendFile(__dirname + "/public/html/table-db.html");
+});
+
 var apiRoutes = require('./api/apiRoutes');
 app.use("/api", apiRoutes);
-
 
 io.on('connection', function (socket) {
 
@@ -51,17 +60,15 @@ io.on('connection', function (socket) {
 		var deviceId = data.deviceId;
 		var currState = data.currState;
 
-		var apiURL = "http://localhost:8080/api/toggleDeviceState?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;		
+		var apiURL = "http://localhost:"+port+"/api/toggleDeviceState?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;		
 		request(apiURL, function() {
 			//console.log("toggleDeviceState", data);
 		});
 
 
-		//var arduinoURL = "http://192.168.0.99/?"+currState;
-		var arduinoURL = "http://192.168.0.99/?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;
-		console.log(arduinoURL)
-		request(arduinoURL, function(data) {
-			//console.log("requested to arduino", data);
+		var arduinoURL = "http://"+process.env.ARDUINO_IP+"/?slug="+roomSlug+"&deviceId="+deviceId+"&currState="+currState;
+		request(arduinoURL, function() {
+			console.log("requested to arduino: ", arduinoURL);
 		});
 	});
 });

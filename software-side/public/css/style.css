@@ -23,7 +23,6 @@
   height: 35px;
 }
 
-
 #backButton, #nextButton{
   display: none;
 }
@@ -149,7 +148,38 @@
 }
 
 .graph .group {
-    fill: none;
-    stroke: black;
-    stroke-width: 1.5;
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5;
+}
+
+.graph-labels {
+	color: #333;
+	max-width: 800px;
+	width: 100%;
+	margin-top: 15px;
+}
+.graph-label {
+	width: 150px;
+	display: inline-block;
+}
+.graph-label span {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: 15px;
+}
+
+.graph-label.meditation span {
+	background:#0000ff;
+}
+.graph-label.attention span {
+	background:#ffa500;
+}
+
+
+#stopButton {
+	position:fixed;
+	bottom:30px;
+	right: 20px;
 }

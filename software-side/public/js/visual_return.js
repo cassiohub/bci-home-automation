@@ -77,8 +77,8 @@ function tick(attention, meditation) {
     var attentionGroup = groups.attention;
     var meditationGroup = groups.meditation;
 
-    console.log(attention);
-    console.log(meditation);
+    // console.log(attention);
+    // console.log(meditation);
 
     attentionGroup.data.push(attention);
     attentionGroup.path.attr('d', line);
@@ -96,7 +96,7 @@ function tick(attention, meditation) {
     // Shift domain
     x.domain([now - (limit - 2) * duration, now - duration])
 
-    console.log("AXIS: "  + axis);
+   //console.log("AXIS: "  + axis);
     // Slide x-axis left
     axis.transition()
         .duration(duration)

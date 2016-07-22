@@ -35,7 +35,6 @@ function _filterBlink (lastBlink, blinkData) {
 
 	var STRONG_BLINK = calibrationData.strongBlink.avarageStrength;
 	var RAW_BLINK = calibrationData.rawBlink;
-	console.log("filterblink: ", RAW_BLINK);
 	var DOUBLE_BLINK_DELAY = calibrationData.doubleBlink.averageDelay;
 	
 	if(RAW_BLINK == true) {
@@ -50,16 +49,16 @@ function _filterBlink (lastBlink, blinkData) {
 			var currBlink = new Date().getTime();
 			var diff = currBlink - lastBlink;
 			
-			if(blinkData > STRONG_BLINK) {
-				if(diff > 500) {
+			if(blinkData >= STRONG_BLINK) {
+				if(diff > 700) {
 					io.emit('violentBlink', { blinkStrength: blinkData, doubleBlink: false });
 					return lastBlink;
 				}
 			}
 
-			if(diff >= 0 && diff <= DOUBLE_BLINK_DELAY) {
+			if(diff > 0 && diff < DOUBLE_BLINK_DELAY) {
 				if(blinkData < STRONG_BLINK) {
-					io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true });
+					io.emit('doubleBlink', { blinkStrength: blinkData, doubleBlink: true, blinkDelay: diff});
 					return lastBlink;
 				}
 			}

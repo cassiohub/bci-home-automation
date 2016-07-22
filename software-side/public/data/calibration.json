@@ -1,1 +1,14 @@
-{"blink":{"calibration":["41","43","52","54","50","61","54","58","63","52","44","55","60","65","53"],"avarageStrength":"53"},"doubleBlink":{"averageDelay":"401"},"strongBlink":{"calibration":["239","255","175","255","255","255","255","255","242","255","255","255","255","255","255"],"avarageStrength":"247"},"rawBlink":"false"}
+{
+	"blink": {
+		"calibration": ["41", "43", "52", "54", "50", "61", "54", "58", "63", "52", "44", "55", "60", "65", "53"],
+		"avarageStrength": "53"
+	},
+	"doubleBlink": {
+		"averageDelay": "250"
+	},
+	"strongBlink": {
+		"calibration": ["239", "255", "175", "255", "255", "255", "255", "255", "242", "255", "255", "255", "255", "255", "255"],
+		"avarageStrength": "150"
+	},
+	"rawBlink": "false"
+}

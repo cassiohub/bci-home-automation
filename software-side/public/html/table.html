@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BCI - Home Automation - Table</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+	
+	<section class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Blink Number</th>
+							<th>Blink Strength</th>
+						</tr>
+						</thead>
+
+						<tbody id='table-body'></tbody>
+				</table>
+			</div>	
+			
+			<button class="btn btn-danger" id="stopButton">Stop</button>
+
+			<div class="alert alert-danger alert-dismissible" role="alert" id="error-alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Error!</strong> <span id="error-message"></span>.
+			</div>
+
+		</div>
+	</section>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="js/lib/jquery-2.2.4.min.js"></script>
+	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="js/table.js"></script>
+</body>
+</html>

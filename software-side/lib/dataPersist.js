@@ -4,7 +4,9 @@ var fs = require("fs");
 function _readJSONFile(fileName, callback) {
 	fs.readFile(fileName, "utf8", function(err, data) {
 		if(err) throw err;
-		callback(JSON.parse(data.toString()));
+		setTimeout(function(){
+			callback(JSON.parse(data.toString()));
+		}, 200);
 	});
 }
 

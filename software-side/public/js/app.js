@@ -1,15 +1,13 @@
 var socket = io();
 
 socket.on('graph_data', function (data) {
-  console.log(data);
-  console.log(new Date().getTime());
+  //console.log(data);
   tick(data.attention, data.meditation);
 });
 
 socket.on('blink', function (data) {
   visualReturn("blink");
   console.log(data);
-  //socket.emit("clicou", {url: '/sala/led/ON'});
 });
 
 
@@ -155,7 +153,9 @@ function selectRoom() {
 
     $("#devices").slideDown('fast');
     $("#backButton").show();
-
+    $('html,body').animate({
+      scrollTop: $("#devices").offset().top},
+      'slow');
   }
 }
 
@@ -202,6 +202,10 @@ function goBack() {
   $("#devices").slideUp('fast');
   $deviceMenu.removeClass("active").empty();
   $roomsMenu.addClass("active");
+
+  $('html,body').animate({
+      scrollTop: $(".chart").offset().top},
+      'slow');
 }
 
 
